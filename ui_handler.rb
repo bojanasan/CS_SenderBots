@@ -72,5 +72,5 @@ module UIHandler
 
 end
 
-include UIHandler
-UIHandler.run
+# include UIHandler
+# UIHandler.run
