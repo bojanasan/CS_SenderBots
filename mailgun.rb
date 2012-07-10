@@ -5,7 +5,7 @@ module EmailSender
     def self.send_email(user_email, listing_email, listing_title, body)
 
       RestClient.post "https://api:key-903saomu7owoeibd0pur22m-ct109sw0"\
-        "https://api.mailgun.net/v2",
+        "@api.mailgun.net/v2/senderbots.mailgun.org/messages",
          :from => user_email ,
          :to => listing_email ,
          :subject => listing_title ,
