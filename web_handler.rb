@@ -20,9 +20,5 @@ module WebHandler
 
     return results
   end
-
-<<<<<<< HEAD
-
-=======
 end
->>>>>>> Listing halfway done, fixes for WebHandler
+
