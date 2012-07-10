@@ -19,8 +19,24 @@ module UIHandler
              url = gets.chomp
              puts "We are now monitoring #{url}"
              puts "All matching listings will be sent an email on your behalf."
-             WebHandler::get_listings_from_url(url)
-             command = "quit"
+
+
+                   running = ""
+                   counter = 0
+                   while running != 'stop'
+                     sleep 2
+                     puts "monitoring web page"
+                     counter +=1
+                     if counter % 5 == 0
+                       puts "We just sent out emails for you"
+                       # WebHandler::get_listings_from_url(url).each {|listing| listing.send_mail_if_unsent}
+                     end
+
+                   end
+
+
+
+
 
            when 'history'
               puts "Here is your history: blah blah blah"
