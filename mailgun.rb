@@ -21,16 +21,16 @@ module EmailSender
 end
 
 # puts " Hello #{$name}"
-include EmailSender
-
- body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
-        "Please let me know if it's still available and what would be a good time to take a look." \
-        "" \
-        "Thank you!"\
-        "Bojana"
-
-
-EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br', body)
-
-puts "seems to have worked"
+# include EmailSender
+#
+#  body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
+#         "Please let me know if it's still available and what would be a good time to take a look." \
+#         "" \
+#         "Thank you!"\
+#         "Bojana"
+#
+#
+# EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br', body)
+#
+# puts "seems to have worked"
 

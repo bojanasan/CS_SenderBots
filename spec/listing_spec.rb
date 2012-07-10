@@ -5,7 +5,10 @@ require './listing.rb'
 
 describe 'Listing' do
 
-
+  after :all do
+    db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
+    db.execute('DELETE FROM listings')
+  end
 
   describe '#initialize' do
     it "raises an error if it doesn't receive an email" do
@@ -28,11 +31,12 @@ describe 'Listing' do
 
   describe '#store_to_db' do
     before :each do
+      @db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
+      SQLite3::Database.stub(:new).and_return(@db)
+
       @listing = CraigslistMonitor::Listing.new({:url => 'http://sfbay.craigslist.org/sfc/apa/3129154467.html',
                                                 :title => '$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta',
                                                 :email => 'hzzf4-3129154467@hous.craigslist.org'})
-      @db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
-      SQLite3::Database.stub(:new).and_return(@db)
       @time_now = Time.now
       Time.stub(:now).and_return(@time_now)
       @db.execute('DELETE FROM listings')
@@ -52,13 +56,33 @@ describe 'Listing' do
 
   end
 
-  # describe '#send_email_if_unsent' do
-  #     before :each do
-  #       @listing = CraigslistMonitor::Listing.new({:url => 'http://sfbay.craigslist.org/sfc/apa/3129154467.html',
-  #                                                 :title => '$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta',
-  #                                                 :email => 'hzzf4-3129154467@hous.craigslist.org'})
-  #       @db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
-  #       SQLite3::Database.stub(:new).and_return(@db)
-  #     end
-  # end
+  describe '#send_email_if_unsent' do
+    before :each do
+      @db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
+      SQLite3::Database.stub(:new).and_return(@db)
+      EmailSender.stub(:send_email).and_return(true)
+      @time_now = Time.now
+      Time.stub(:now).and_return(@time_now)
+
+      @listing = CraigslistMonitor::Listing.new({:url => 'http://sfbay.craigslist.org/sfc/apa/3129154467.html',
+                                                :title => '$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta',
+                                                :email => 'hzzf4-3129154467@hous.craigslist.org'})
+
+      @db.execute('DELETE FROM listings')
+      @listing.store_to_db
+    end
+
+    it 'sends an email to the EmailSender module' do
+      EmailSender.should_receive(:send_email).with('user@example.com', 'hzzf4-3129154467@hous.craigslist.org', '$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta', 'test')
+      @listing.send_email_if_unsent('user@example.com','test')
+    end
+
+    it 'marks the listing as sent in the db' do
+      @listing.send_email_if_unsent('user@example.com','test')
+      @db.execute("SELECT emailed_at FROM listings WHERE email = 'hzzf4-3129154467@hous.craigslist.org'").first.first.should eq @time_now.to_s
+    end
+  end
 end
+
+
+
