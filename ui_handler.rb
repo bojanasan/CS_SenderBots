@@ -1,4 +1,5 @@
 require './web_handler.rb'
+require './mailgun.rb'
 
 module UIHandler
 
@@ -14,11 +15,18 @@ module UIHandler
 
         case command
            when 'monitor'
-             puts "Please give me a URL to monitor."
-             print "URL: "
-             url = gets.chomp
-             puts "We are now monitoring #{url}"
-             puts "All matching listings will be sent an email on your behalf."
+           # puts "Please give me a URL to monitor."
+           #           print "URL: "
+           #           url = gets.chomp
+           #           puts "All matching listings will be sent an email on your behalf."
+           #           puts "What email address would you like to use to send correspondence from?"
+           #           puts "Email: "
+           #           email = gets.chomp
+
+           puts "What contact name would you like to provide in the email?"
+           print "Name: "
+           $name = gets.chomp
+           # puts "We are now monitoring #{url}"
 
 
                    running = ""
@@ -29,6 +37,7 @@ module UIHandler
                      counter +=1
                      if counter % 5 == 0
                        puts "We just sent out emails for you"
+                       EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br - 1 BR APARTMENT WALKING DISTANCE TO UC BART! ONLY $1335! (fremont / union city / newark)' )
                        # WebHandler::get_listings_from_url(url).each {|listing| listing.send_mail_if_unsent}
                      end
 
