@@ -15,7 +15,11 @@ module EmailSender
 
 end
 
+<<<<<<< HEAD
+# puts " Hello #{$name}"
+=======
 
+>>>>>>> f1ad8c63c3f588a79a6ea1dd60adb0993fb68168
 # include EmailSender
 #
 #  body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
