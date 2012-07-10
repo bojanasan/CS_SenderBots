@@ -15,21 +15,21 @@ module EmailSender
 
 end
 
-<<<<<<< HEAD
-# puts " Hello #{$name}"
-=======
-
->>>>>>> f1ad8c63c3f588a79a6ea1dd60adb0993fb68168
-# include EmailSender
+# <<<<<<< HEAD
+# # puts " Hello #{$name}"
+# =======
 #
-#  body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
-#         "Please let me know if it's still available and what would be a good time to take a look." \
-#         "" \
-#         "Thank you!"\
-#         "Bojana"
-#
-#
-# EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br', body)
-#
-# puts "seems to have worked"
+# >>>>>>> f1ad8c63c3f588a79a6ea1dd60adb0993fb68168
+# # include EmailSender
+# #
+# #  body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
+# #         "Please let me know if it's still available and what would be a good time to take a look." \
+# #         "" \
+# #         "Thank you!"\
+# #         "Bojana"
+# #
+# #
+# # EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br', body)
+# #
+# # puts "seems to have worked"
 
