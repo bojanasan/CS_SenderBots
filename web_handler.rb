@@ -26,4 +26,4 @@ module WebHandler
   end
 end
 
-WebHandler::get_listings_from_url('./html/sample.html')
+
