@@ -40,6 +40,7 @@ describe 'Listing' do
 
     it 'stores a new row in the db if the listing is new' do
       @listing.store_to_db
+      puts  @db.execute("SELECT * FROM listings").inspect
       @db.execute("SELECT * FROM listings WHERE url='http://sfbay.craigslist.org/sfc/apa/3129154467.html'").first.slice(1..-1).should eq ["http://sfbay.craigslist.org/sfc/apa/3129154467.html", "$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta", "hzzf4-3129154467@hous.craigslist.org", nil, @time_now.to_s, @time_now.to_s]
     end
 
@@ -51,5 +52,13 @@ describe 'Listing' do
 
   end
 
-
+  # describe '#send_email_if_unsent' do
+  #     before :each do
+  #       @listing = CraigslistMonitor::Listing.new({:url => 'http://sfbay.craigslist.org/sfc/apa/3129154467.html',
+  #                                                 :title => '$3244 / 1br - 789ft - Large, Modern & More-Come home to Argenta',
+  #                                                 :email => 'hzzf4-3129154467@hous.craigslist.org'})
+  #       @db = SQLite3::Database.new "./spec/craigslist_monitor_test.db"
+  #       SQLite3::Database.stub(:new).and_return(@db)
+  #     end
+  # end
 end
