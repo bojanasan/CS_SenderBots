@@ -1,5 +1,8 @@
 require './web_handler.rb'
 require './mailgun.rb'
+require 'sqlite3'
+# require 'craigsltist_monitor.db'
+
 
 module UIHandler
 
@@ -67,10 +70,23 @@ module UIHandler
              puts "Sorry, I don't know how to (#{command})"
         end
       end
+  end
+
+  def self.show_history
+    @db = SQLite3::Database.new "./craigslist_monitor.db"
+    listing_row = @db.execute('SELECT title, url, email, updated_at FROM listings')
+
+    listing_row.each do |row|
+          puts "Title: #{row[0]}"
+          puts "URL: #{row[1]}"
+          puts "Email sent to: #{row[2]}"
+          puts "Email sent out at: #{row[3]}"
+          puts ""
     end
 
+  end
 
 end
 
 # include UIHandler
-# UIHandler.run
+# UIHandler.show_history
