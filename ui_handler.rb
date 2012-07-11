@@ -5,8 +5,7 @@ require 'sqlite3'
 
 module UIHandler
 
-
-  def run
+  def self.run
       puts"Welcome to CL crawler."
       puts "Please select one of the following options: [monitor, history, unmonitor]"
       command = ""
@@ -39,21 +38,21 @@ module UIHandler
 
                    running = ""
                    counter = 0
-                   WebHandler::get_listings_from_url(url).each { |listing| listing.store_to_db }
-                   flag = false
+                   WebHandler::get_new_listings_from_url(url).each { |listing| listing.store_to_db }
+                   any_email_sent = false
                    while running != 'stop'
                      sleep 2
                      puts "monitoring web page"
                      counter +=1
                      if counter % 5 == 0
-                       WebHandler::get_listings_from_url(url).each do |listing|
+                       WebHandler::get_new_listings_from_url(url).each do |listing|
                          listing.store_to_db
                          listing.send_email_if_unsent(email, body)
                          puts "email sent!"
-                         flag = true
+                         any_email_sent = true
                        end
-                       puts "no emails sent this time period" unless flag
-                       flag = false
+                       puts "no emails sent this time period" unless any_email_sent
+                       any_email_sent = false
                      end
 
                    end
@@ -63,8 +62,8 @@ module UIHandler
 
 
            when 'history'
-              puts "Here is your history: blah blah blah"
-              #show all history
+              puts "Here is your history:\n"
+              show_history
               command = "quit"
 
            when 'unmonitor'
@@ -94,5 +93,4 @@ module UIHandler
 
 end
 
-include UIHandler
 UIHandler.run

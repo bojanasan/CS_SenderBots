@@ -21,12 +21,12 @@ module CraigslistMonitor
     end
 
     def send_email_if_unsent(user_email, body)
-      # EmailSender.send_email(user_email, @email, @title, body)
+      #EmailSender.send_email(user_email, @email, @title, body)
       EmailSender.send_email(user_email, 'david@ladowitz.com', @title, body)
       @db.execute("UPDATE listings SET emailed_at = '#{Time.now}' WHERE email = ?", @email)
     end
 
-    def already_in_db
+    def already_in_db?
       @db.execute("SELECT COUNT(*) FROM listings WHERE email = ?", @email).first.first == 1
     end
 
