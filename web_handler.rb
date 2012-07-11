@@ -14,7 +14,8 @@ module WebHandler
 
       unless listing_page.css('span.returnemail a')[0].nil?
         listing_options[:email] = listing_page.css('span.returnemail a')[0].content
-        results << CraigslistMonitor::Listing.new(listing_options)
+        new_listing = CraigslistMonitor::Listing.new(listing_options)
+        results <<  new_listing unless new_listing.already_in_db
       end
     end
 

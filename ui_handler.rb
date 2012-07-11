@@ -1,7 +1,6 @@
 require './web_handler.rb'
 require './mailgun.rb'
 require 'sqlite3'
-# require 'craigsltist_monitor.db'
 
 
 module UIHandler
@@ -40,14 +39,21 @@ module UIHandler
 
                    running = ""
                    counter = 0
+                   WebHandler::get_listings_from_url(url).each { |listing| listing.store_to_db }
+                   flag = false
                    while running != 'stop'
                      sleep 2
                      puts "monitoring web page"
                      counter +=1
                      if counter % 5 == 0
-                       puts "We just sent out emails for you"
-                       # EmailSender::send_email('david@ladowitz.com', 'david@aronsontech.com', '$1335 / 1br - 1 BR APARTMENT WALKING DISTANCE TO UC BART! ONLY $1335! (fremont / union city / newark)' )
-                       # WebHandler::get_listings_from_url(url).each {|listing| listing.send_mail_if_unsent(body)}
+                       WebHandler::get_listings_from_url(url).each do |listing|
+                         listing.store_to_db
+                         listing.send_email_if_unsent(email, body)
+                         puts "email sent!"
+                         flag = true
+                       end
+                       puts "no emails sent this time period" unless flag
+                       flag = false
                      end
 
                    end
@@ -88,5 +94,5 @@ module UIHandler
 
 end
 
-# include UIHandler
-# UIHandler.show_history
+include UIHandler
+UIHandler.run
