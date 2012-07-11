@@ -6,34 +6,44 @@ require 'sqlite3'
 module UIHandler
 
   def self.run
-      puts"Welcome to CL crawler."
-      puts "Please select one of the following options: [monitor, history, unmonitor]"
-      command = ""
-      printf "enter command: "
-      command = gets.chomp
-      while command != "quit"
+
+    puts "Welcome to the Craislist Monitor."
+        puts "We can monitor a Craigslist page for new listsings or show you a history of activity"
         puts ""
+        puts "Please select one of the following options: [monitor, history]"
+        command = ""
+        print "Enter command: "
+        command = gets.chomp
+        while command != "quit"
+          puts ""
 
-        case command
-           when 'monitor'
-           puts "Please give me a URL to monitor."
-           print "URL: "
-           url = gets.chomp
-           puts "All matching listings will be sent an email on your behalf."
-           puts "What email address would you like to use to send correspondence from?"
-           puts "Email: "
-           email = gets.chomp
+          case command
+             when 'monitor'
+             puts "Please give me a URL to monitor."
+             print "URL: "
+             url = gets.chomp
+             puts ""
+             puts "We are now monitoring #{url}"
+             puts "All matching listings will be sent an email on your behalf."
+             puts ""
 
-           puts "What contact name would you like to provide in the email?"
-           print "Name: "
-           name = gets.chomp
-           puts "We are now monitoring #{url}"
+             puts "What email address would you like to use to send correspondence from?"
+             print "Email: "
+             email = gets.chomp
+             puts ""
 
-           body = "Hello! I saw your listing on Craigslist and I am really itneresting at taking a look in person." \
-                  "Please let me know if it's still available and what would be a good time to take a look." \
-                  "" \
-                  "Thank you!"\
-                  "#{name}"
+             puts "What contact name would you like to provide in the email?"
+             print "Name: "
+             name = gets.chomp
+             puts ""
+
+
+
+             body = "Hello! I saw your listing on Craigslist and I am really interest at taking a look in person." \
+                    "Please let me know if it's still available and what would be a good time to meet." \
+                    "" \
+                    "Thank you!"\
+                    "#{name}"
 
 
                    running = ""
