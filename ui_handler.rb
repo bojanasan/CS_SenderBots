@@ -48,7 +48,7 @@ module UIHandler
 
                    running = ""
                    counter = 0
-                   WebHandler::get_new_listings_from_url(url).each { |listing| listing.store_to_db }
+                   WebHandler::get_new_listings_from_url(url).each { |listing| listing.store_to_db } #Listing.new(:url => listing[url], :title => listing[title]
                    any_email_sent = false
                    while running != 'stop'
                      sleep 2
