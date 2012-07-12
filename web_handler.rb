@@ -13,9 +13,9 @@ module WebHandler
       listing_page = Nokogiri::HTML(open(link['href']))
 
       unless listing_page.css('span.returnemail a')[0].nil?
-        listing_options[:email] = listing_page.css('span.returnemail a')[0].content
-        new_listing = CraigslistMonitor::Listing.new(listing_options)
-        results <<  new_listing unless new_listing.already_in_db?
+        listing_options[:authors_email] = listing_page.css('span.returnemail a')[0].content
+        new_listing = CraigslistMonitor::Listing.find_or_create_by_title_and_url_and_authors_email(listing_options)
+        results <<  new_listing
       end
     end
 

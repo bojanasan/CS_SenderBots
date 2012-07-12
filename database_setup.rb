@@ -3,10 +3,10 @@ require 'sqlite3'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
-  :database => './craigslist.sqlite3'
+  :database => './db/craigslist.sqlite3'
 )
 
-unless File.exists?('./craigslist.sqlite3')
+unless File.exists?('./db/craigslist.sqlite3')
   puts 'creating database'
 
 
@@ -24,6 +24,8 @@ unless File.exists?('./craigslist.sqlite3')
       table.column :user_name, :string, :null => false
       table.column :user_email, :string, :null => false
       table.column :search_url, :string, :null => false
+      table.column :created_at, :datetime
+      table.column :updated_at, :datetime
     end
 
   end

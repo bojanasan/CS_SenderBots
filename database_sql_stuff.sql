@@ -1,9 +1,0 @@
-CREATE TABLE listings (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  url VARCHAR NOT NULL,
-  title VARCHAR NOT NULL,
-  email VARCHAR NOT NULL,
-  emailed_at DATETIME,
-  created_at DATETIME NOT NULL,
-  updated_at DATETIME NOT NULL
-);
